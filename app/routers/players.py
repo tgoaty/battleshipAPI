@@ -1,9 +1,11 @@
 from http.client import HTTPException
+from uuid import UUID
+
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
-from sqlalchemy import select
+from sqlalchemy import select, or_
 from app.database import get_db
-from app.schemes.players import PlayerOut, PlayerLogin, PlayerRegister
+from app.schemes.players import PlayerOut, PlayerLogin, PlayerRegister, PlayerGameStats
 from app.models.players import Players
 from app.models.games import Games
 from app.models.games import GameStatus
@@ -54,6 +56,14 @@ async def get_available_players(db: AsyncSession = Depends(get_db)):
     available_players = [p for p in all_players if p.sid not in busy_ids]
     return available_players
 
-@router.get("/{player_sid}/stats")
-async def get_player_stats():
-    pass
+@router.get("/{player_sid}/stats", response_model=list[PlayerGameStats])
+async def get_player_stats(player_sid: UUID, db: AsyncSession = Depends(get_db)):
+    result = await db.execute(
+        select(Games)
+        .where(or_(Games.player1_sid == player_sid, Games.player2_sid == player_sid))
+        .order_by(Games.created_at.desc())
+    )
+    games = result.scalars().all()
+    if not games:
+        raise HTTPException(status_code=404, detail="No games found for player")
+    return games
