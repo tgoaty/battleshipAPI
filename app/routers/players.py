@@ -5,6 +5,9 @@ from sqlalchemy import select
 from app.database import get_db
 from app.schemes.players import PlayerOut, PlayerLogin, PlayerRegister
 from app.models.players import Players
+from app.models.games import Games
+from app.models.games import GameStatus
+
 
 router = APIRouter(prefix="/players", tags=["players"])
 
@@ -32,10 +35,24 @@ async def login(data: PlayerLogin, db: AsyncSession = Depends(get_db)):
     return player
 
 
-@router.get("")
-async def get_available_players():
-    pass
+@router.get("", response_model=list[PlayerOut])
+async def get_available_players(db: AsyncSession = Depends(get_db)):
+    result = await db.execute(select(Players))
+    all_players = result.scalars().all()
 
+    result = await db.execute(select(Games))
+    games = result.scalars().all()
+
+    busy_ids = set()
+    for game in games:
+        if game.status in [GameStatus.waiting, GameStatus.active]:
+            if game.player1_sid:
+                busy_ids.add(game.player1_sid)
+            if game.player2_sid:
+                busy_ids.add(game.player2_sid)
+
+    available_players = [p for p in all_players if p.sid not in busy_ids]
+    return available_players
 
 @router.get("/{player_sid}/stats")
 async def get_player_stats():
