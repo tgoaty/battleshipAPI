@@ -7,6 +7,8 @@ from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 
+from app.utils.board_generator import generate_board
+
 router = APIRouter(prefix="/games", tags=["games"])
 
 
@@ -18,8 +20,8 @@ async def create_game(data: GameCreate, db: AsyncSession = Depends(get_db)):
     new_game = Games(
         player1_sid=data.player1_sid,
         player2_sid=data.player2_sid,
-        board_player1="",
-        board_player2="",
+        board_player1=generate_board(),
+        board_player2=generate_board(),
         status=GameStatus.waiting
     )
     db.add(new_game)
