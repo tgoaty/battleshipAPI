@@ -19,11 +19,12 @@ docker-compose up --build
 ## Проверка
 
 В репозитории есть postman коллекция: postman-collection.json
+
 Для проверки ws:
 ```
 ws://localhost:8000/games/{{game_sid}}/play?player_sid={{player_sid}}
 ```
-body для сообщений в ws:
+Body для сообщений в ws:
 ```
 {
 "type": "move",
