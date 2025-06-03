@@ -14,8 +14,6 @@ from app.models.games import GameStatus
 router = APIRouter(prefix="/players", tags=["players"])
 
 
-
-
 @router.post("/register", response_model=PlayerOut)
 async def register(data: PlayerRegister, db: AsyncSession = Depends(get_db)):
     result = await db.execute(select(Players).where(Players.username == data.username))

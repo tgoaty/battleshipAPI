@@ -23,3 +23,5 @@ class Games(Base):
     status = Column(Enum(GameStatus), default=GameStatus.waiting, nullable=False)
     winner_sid = Column(UUID(as_uuid=True), ForeignKey("players.sid"), nullable=True)
     created_at = Column(DateTime, default=datetime.utcnow)
+
+    current_turn_sid = Column(UUID(as_uuid=True), ForeignKey("players.sid"), nullable=True)

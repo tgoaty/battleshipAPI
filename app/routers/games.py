@@ -22,7 +22,8 @@ async def create_game(data: GameCreate, db: AsyncSession = Depends(get_db)):
         player2_sid=data.player2_sid,
         board_player1=generate_board(),
         board_player2=generate_board(),
-        status=GameStatus.waiting
+        status=GameStatus.waiting,
+
     )
     db.add(new_game)
     await db.commit()
