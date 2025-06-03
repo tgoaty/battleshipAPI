@@ -4,13 +4,14 @@ from datetime import datetime
 from sqlalchemy.dialects.postgresql.base import UUID
 from sqlalchemy import Column, DateTime, ForeignKey, Enum
 from sqlalchemy.sql.sqltypes import String
-
 from app.models.base import Base
+
 
 class GameStatus(enum.Enum):
     waiting = "waiting"
     active = "active"
     finished = "finished"
+
 
 class Games(Base):
     __tablename__ = "games"

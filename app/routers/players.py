@@ -1,6 +1,5 @@
 from http.client import HTTPException
 from uuid import UUID
-
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select, or_
@@ -9,7 +8,6 @@ from app.schemes.players import PlayerOut, PlayerLogin, PlayerRegister, PlayerGa
 from app.models.players import Players
 from app.models.games import Games
 from app.models.games import GameStatus
-
 
 router = APIRouter(prefix="/players", tags=["players"])
 
@@ -25,6 +23,7 @@ async def register(data: PlayerRegister, db: AsyncSession = Depends(get_db)):
     await db.commit()
     await db.refresh(new_player)
     return new_player
+
 
 @router.post("/login", response_model=PlayerOut)
 async def login(data: PlayerLogin, db: AsyncSession = Depends(get_db)):
@@ -53,6 +52,7 @@ async def get_available_players(db: AsyncSession = Depends(get_db)):
 
     available_players = [p for p in all_players if p.sid not in busy_ids]
     return available_players
+
 
 @router.get("/{player_sid}/stats", response_model=list[PlayerGameStats])
 async def get_player_stats(player_sid: UUID, db: AsyncSession = Depends(get_db)):

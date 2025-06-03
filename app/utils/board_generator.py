@@ -4,6 +4,7 @@ import json
 BOARD_SIZE = 10
 SHIP_SIZES = [4, 3, 3, 2, 2, 2, 1, 1, 1, 1]
 
+
 def generate_board() -> str:
     board = [[0] * BOARD_SIZE for _ in range(BOARD_SIZE)]
 

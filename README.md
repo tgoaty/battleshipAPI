@@ -12,3 +12,22 @@ API для игры "Морской бой" с использованием Fast
 
 ```bash
 docker-compose up --build
+```
+
+---
+
+## Проверка
+
+В репозитории есть postman коллекция: postman-collection.json
+Для проверки ws:
+```
+ws://localhost:8000/games/{{game_sid}}/play?player_sid={{player_sid}}
+```
+body для сообщений в ws:
+```
+{
+"type": "move",
+"x": 3,
+"y": 5
+}
+```

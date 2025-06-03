@@ -9,6 +9,7 @@ class GameCreate(BaseModel):
     player1_sid: UUID
     player2_sid: UUID
 
+
 class GameOut(BaseModel):
     sid: UUID
     player1_sid: UUID

@@ -1,0 +1,172 @@
+{
+  "info": {
+    "name": "Battleship REST & WebSocket API",
+    "_postman_id": "battleship-api-collection",
+    "description": "Postman коллекция для тестирования REST и WebSocket API игры 'Морской бой'.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "POST /players/register",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"player1\",\n  \"password\": \"pass123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/players/register",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "players",
+            "register"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST /players/login",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"username\": \"player1\",\n  \"password\": \"pass123\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/players/login",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "players",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /players",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/players",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "players"
+          ]
+        }
+      }
+    },
+    {
+      "name": "POST /games/create",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"player1_sid\": \"{{player1_sid}}\",\n  \"player2_sid\": \"{{player2_sid}}\"\n}"
+        },
+        "url": {
+          "raw": "http://localhost:8000/games/create",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "games",
+            "create"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /games",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/games",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "games"
+          ]
+        }
+      }
+    },
+    {
+      "name": "GET /players/{player_sid}/stats",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "http://localhost:8000/players/{{player_sid}}/stats",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "players",
+            "{{player_sid}}",
+            "stats"
+          ]
+        }
+      }
+    },
+    {
+      "name": "WS /games/{game_sid}/play",
+      "request": {
+        "method": "GET",
+        "url": {
+          "raw": "ws://localhost:8000/games/{{game_sid}}/play?player_sid={{player_sid}}",
+          "protocol": "ws",
+          "host": [
+            "localhost"
+          ],
+          "port": "8000",
+          "path": [
+            "games",
+            "{{game_sid}}",
+            "play"
+          ],
+          "query": [
+            {
+              "key": "player_sid",
+              "value": "{{player_sid}}"
+            }
+          ]
+        }
+      }
+    }
+  ]
+}

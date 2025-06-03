@@ -6,7 +6,6 @@ from app.schemes.games import GameStatus, GameOut, GameCreate
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
-
 from app.utils.board_generator import generate_board
 
 router = APIRouter(prefix="/games", tags=["games"])

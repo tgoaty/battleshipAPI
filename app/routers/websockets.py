@@ -3,7 +3,6 @@ from fastapi import WebSocket, WebSocketDisconnect, APIRouter, Depends, Query
 from sqlalchemy.ext.asyncio import AsyncSession
 from sqlalchemy import select
 from uuid import UUID
-
 from app.database import get_db
 from app.models.games import Games, GameStatus
 
@@ -14,10 +13,10 @@ connections: dict[UUID, dict[UUID, WebSocket]] = {}
 
 @router.websocket("/games/{game_sid}/play")
 async def websocket_game(
-    websocket: WebSocket,
-    game_sid: UUID,
-    player_sid: UUID = Query(...),
-    db: AsyncSession = Depends(get_db),
+        websocket: WebSocket,
+        game_sid: UUID,
+        player_sid: UUID = Query(...),
+        db: AsyncSession = Depends(get_db),
 ):
     await websocket.accept()
 
